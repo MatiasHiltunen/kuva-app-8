@@ -1,16 +1,13 @@
 <script setup>
 
 import { RouterView } from 'vue-router'
-import BaseLayout from './components/layout/BaseLayout.vue';
-
-
+import NavigationBar from './components/navigation/NavigationBar.vue';
 
 </script>
 
 <template>
-    <BaseLayout>
-        <router-view></router-view>
-    </BaseLayout>
+    <NavigationBar></NavigationBar>
+    <router-view></router-view>
 </template>
 
 <style>
