@@ -6,7 +6,8 @@ import PublicationViewDetails from './components/publication/PublicationViewDeta
 
 export const router = createRouter({
     history: createWebHistory(),
-    routes: [{
+    routes: [
+        {
             path: '/',
             name: 'Julkaisut',
             component: PublicationViewAll

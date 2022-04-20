@@ -104,10 +104,10 @@ const fileUpload = (event) => {
         <label>URL</label>
         <input v-model="publicationData.url" type="text" />
 
-        <label>Kuva tiedostojärjestelmästä {{ dataUrlSize }} Kt </label>
+<!--         <label>Kuva tiedostojärjestelmästä {{ dataUrlSize }} Kt </label>
         <input @change="fileUpload" type="file" />
 
-        <canvas ref="previewCanvas"></canvas>
+        <canvas ref="previewCanvas"></canvas> -->
 
         <small>{{ isDataValid.urlValidation }}</small>
         <button :disabled="!isDataValid.isAllValid" @click="createNewPublication">Lähetä</button>

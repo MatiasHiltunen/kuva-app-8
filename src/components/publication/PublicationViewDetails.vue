@@ -2,9 +2,11 @@
 import { publicationService } from '../../services/publicationService';
 import PublicationView from './PublicationView.vue';
 
+
 const props = defineProps({
     publicationId: String
 })
+
 
 const { data, error, isFinished } = publicationService.useGetById(props.publicationId)
 

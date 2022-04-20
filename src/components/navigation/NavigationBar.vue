@@ -1,5 +1,11 @@
 <script setup>
+import { provide, ref } from 'vue';
 import { RouterLink } from 'vue-router'
+import LoginView from '../login/LoginView.vue';
+
+const showLoginView = ref(false)
+
+provide('showLoginView', showLoginView)
 
 </script>
 
@@ -8,16 +14,21 @@ import { RouterLink } from 'vue-router'
         <router-link to="/">Koti</router-link>
         <router-link to="/create">Uusi</router-link>
         <router-link to="/users">Käyttäjät</router-link>
+
+        <a href="#" @click="showLoginView = true">Kirjaudu</a>
+        <a href="#">Ulos</a>
+
+
     </div>
+
+    <LoginView v-if="showLoginView"></LoginView>
 </template>
 
 <style>
 .nav {
     display: flex;
     justify-content: center;
-/*     position: fixed; */
     width: 100%;
-
 }
 
 a {

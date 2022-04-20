@@ -1,7 +1,9 @@
-import { computed, reactive } from "vue";
+import { computed, reactive } from 'vue'
 
 export const globalState = reactive({
-    accessToken: null,
+    accessToken: null
 })
 
-export const isAuth = computed(() => globalState.accessToken != null)
+export const isAuth = computed(()=>{
+    return globalState.accessToken != null
+})
