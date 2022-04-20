@@ -1,11 +1,14 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { publicationService } from '../../services/publicationService';
+
 
 const previewCanvas = ref(null)
 
 const dataUrl = ref('')
 
+const router = useRouter()
 
 const publicationData = reactive({
     title: '',
@@ -55,6 +58,7 @@ const createNewPublication = async () => {
         publicationData.title = ''
         publicationData.description = ''
         publicationData.url = ''
+        router.push('/publication/' + data.value.publication._id)
     }
 }
 
@@ -92,6 +96,7 @@ const fileUpload = (event) => {
 </script>
 
 <template>
+
     <div class="publication-form">
         <label>Otsikko</label>
         <input v-model="publicationData.title" type="text" />
@@ -99,19 +104,25 @@ const fileUpload = (event) => {
         <small>{{ isDataValid.titleValidation }}</small>
         <label>Kuvaus</label>
         <input v-model="publicationData.description" type="text" />
-
         <small>{{ isDataValid.descriptionValidation }}</small>
-        <label>URL</label>
-        <input v-model="publicationData.url" type="text" />
 
-        <label>Kuva tiedostojärjestelmästä {{ dataUrlSize }} Kt </label>
-        <input @change="fileUpload" type="file" />
+        <template v-if="dataUrl == ''">
+            <label>URL</label>
+            <input v-model="publicationData.url" type="text" />
+            <small>{{ isDataValid.urlValidation }}</small>
+        </template>
 
-        <canvas ref="previewCanvas"></canvas>
+        <template v-if="!(publicationData.url.length > 0)">
+            <label>Kuva tiedostojärjestelmästä {{ dataUrlSize }} Kt </label>
+            <input @change="fileUpload" type="file" />
 
-        <small>{{ isDataValid.urlValidation }}</small>
+            <canvas ref="previewCanvas"></canvas>
+            <small v-if="dataUrl.length > 0">{{ isDataValid.dataUrlValidation }}</small>
+        </template>
+
         <button :disabled="!isDataValid.isAllValid" @click="createNewPublication">Lähetä</button>
     </div>
+
 </template>
 
 <style scoped>
