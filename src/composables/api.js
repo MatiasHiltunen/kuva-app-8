@@ -1,4 +1,5 @@
 import { createFetch } from "@vueuse/core";
+import { authService } from "../services/authService";
 import { globalState, isAuth } from "../store";
 
 export const useApi = createFetch({
@@ -7,9 +8,17 @@ export const useApi = createFetch({
         beforeFetch({options}){
             if(isAuth.value){
                 options.headers = {
-                    Authorization: `Bearer ${globalState.accessToken}`
+                    Authorization: `Bearer ${globalState.value.accessToken}`
                 }
             }
+        },
+
+        onFetchError({data, error, response}){
+  
+            if(response.status === 401 && data?.msg instanceof Array && data?.msg.includes("Unauthorized")){
+                authService.useLogout()
+            }
+           
         }
     }
 })
