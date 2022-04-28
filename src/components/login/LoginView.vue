@@ -2,6 +2,7 @@
 import { onClickOutside } from '@vueuse/core';
 import { inject, reactive, ref } from 'vue';
 import { authService } from '../../services/authService';
+import { RouterLink } from 'vue-router'
 
 const credentials = reactive({
     username: '',
@@ -12,11 +13,11 @@ const showLoginView = inject('showLoginView')
 
 const target = ref(null)
 
-onClickOutside(target, ()=>{
+onClickOutside(target, () => {
     showLoginView.value = false
 })
 
-const login = async ()=>{
+const login = async () => {
     await authService.useLogin(credentials)
 
     credentials.username = ''
@@ -33,6 +34,8 @@ const login = async ()=>{
 
         <label>Salasana</label>
         <input v-model="credentials.password" type="password">
+
+        <router-link to="/register" @click="showLoginView = false">Eikö sinulla ole vielä tunnusta?</router-link>
 
         <button type="submit">Kirjaudu</button>
 

@@ -3,6 +3,7 @@ import PublicationViewAll from './components/publication/PublicationViewAll.vue'
 import UsersView from './components/user/UsersView.vue'
 import PublicationCreate from './components/publication/PublicationCreate.vue'
 import PublicationViewDetails from './components/publication/PublicationViewDetails.vue'
+import RegistrationView from './components/registration/RegistrationView.vue'
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -27,6 +28,11 @@ export const router = createRouter({
             props: true,
             name: 'Yksittäinen postaus',
             component: PublicationViewDetails
+        },
+        {
+            path: '/register',
+            name: 'Rekisteröityminen',
+            component: RegistrationView
         }
     ]
 })
