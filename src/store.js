@@ -2,7 +2,7 @@ import { useStorage } from '@vueuse/core'
 import { computed } from 'vue'
 
 
-export const globalState = useStorage('accessToken', {
+export const globalState = useStorage('global_state', {
     accessToken: null,
 })
 

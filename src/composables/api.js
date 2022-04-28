@@ -13,10 +13,11 @@ export const useApi = createFetch({
             }
         },
 
-        onFetchError({data, error, response}){
+        async onFetchError({data, error, response}){
   
-            if(response.status === 401 && data?.msg instanceof Array && data?.msg.includes("Unauthorized")){
-                authService.useLogout()
+            if(response.status === 401 && data?.msg instanceof Array 
+                && data?.msg.includes("Unauthorized")){
+                await authService.useLogout()
             }
            
         }

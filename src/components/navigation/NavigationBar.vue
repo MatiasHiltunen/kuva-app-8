@@ -9,6 +9,9 @@ const showLoginView = ref(false)
 
 provide('showLoginView', showLoginView)
 
+const logout = async ()=>{
+   await authService.useLogout()
+}
 
 </script>
 
@@ -18,7 +21,7 @@ provide('showLoginView', showLoginView)
         <router-link to="/create">Uusi</router-link>
         <router-link v-if="isAuth" to="/users">Käyttäjät</router-link>
 
-        <a href="#" v-if="isAuth" @click.prevent="authService.useLogout()">Ulos</a>
+        <a href="#" v-if="isAuth" @click.prevent="logout">Ulos</a>
         <a href="#" v-else @click.prevent="showLoginView = true">Kirjaudu</a>
      
     </div>
