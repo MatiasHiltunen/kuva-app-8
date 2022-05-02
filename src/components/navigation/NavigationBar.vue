@@ -1,6 +1,7 @@
 <script setup>
 import { provide, ref } from 'vue';
 import { RouterLink } from 'vue-router'
+/* import { setError } from '../../composables/notification'; */
 import { authService } from '../../services/authService';
 import { isAuth } from '../../store';
 import LoginView from '../login/LoginView.vue';
@@ -13,6 +14,7 @@ const logout = async ()=>{
    await authService.useLogout()
 }
 
+
 </script>
 
 <template>
@@ -23,7 +25,7 @@ const logout = async ()=>{
 
         <a href="#" v-if="isAuth" @click.prevent="logout">Ulos</a>
         <a href="#" v-else @click.prevent="showLoginView = true">Kirjaudu</a>
-     
+     <!--    <a href="" @click.prevent="setError('Testi')">Testaa virheviesti</a> -->
     </div>
 
     <LoginView v-if="showLoginView && !isAuth"></LoginView>
