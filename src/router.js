@@ -4,8 +4,9 @@ import UsersView from './components/user/UsersView.vue'
 import PublicationCreate from './components/publication/PublicationCreate.vue'
 import PublicationViewDetails from './components/publication/PublicationViewDetails.vue'
 import RegistrationView from './components/registration/RegistrationView.vue'
+import { isAuth } from './store'
 
-export const router = createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
@@ -36,3 +37,13 @@ export const router = createRouter({
         }
     ]
 })
+
+router.beforeEach((to, from, next)=>{
+    if(to.path === '/users' && !isAuth.value){
+        next('/')
+    } else {
+        next()
+    }
+})
+
+export { router }

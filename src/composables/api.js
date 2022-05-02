@@ -1,6 +1,7 @@
 import { createFetch } from "@vueuse/core";
 import { authService } from "../services/authService";
 import { globalState, isAuth } from "../store";
+import { setError } from "./notification";
 
 export const useApi = createFetch({
     baseUrl: 'https://vara.onrender.com/api',
@@ -16,6 +17,7 @@ export const useApi = createFetch({
         },
         async onFetchError({ data, error, response }) {
 
+            setError(data)
             /* 
             
             {

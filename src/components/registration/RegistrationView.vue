@@ -12,13 +12,6 @@ const userData = reactive({
     email: ''
 })
 
-/* 
-    Nimi on tarpeeksi pitkä eikä sisällä erikoismerkkejä
-    Onko validi sähköposti?
-    Kysytään salasana kahdesti ja varmistetaan että annetut salasanat täsmäävät
-    Validoinnin onnistuessa annetaan käyttäjän klikata rekisteröitymisnappia
-*/
-
 const allowedCharacters = "qwertyuiopåasdfghjklöäzxcvbnm1234567890"
 
 const dataValidation = computed(() => {
@@ -34,10 +27,16 @@ const dataValidation = computed(() => {
 
     const isUsernameValid = userData.username.length > 2 && !hasSpecialCharacters
     const isEmailValid = userData.email.includes('@') && userData.email.includes('.')
+    const isPasswordValid = userData.password.length > 7
+    const isPasswordConfirmed = userData.password === confirmPassword.value
+    const isAllValid = isUsernameValid && isEmailValid && isPasswordValid && isPasswordConfirmed
 
     return {
         isUsernameValid,
-        isEmailValid
+        isEmailValid,
+        isPasswordValid,
+        isPasswordConfirmed,
+        isAllValid
     }
 
 })
@@ -56,21 +55,30 @@ const register = async () => {
     <div v-if="isRegistrationSuccessful">Rekisteröityminen onnistui, nyt voit kirjautua sisään</div>
     <form v-else @submit.prevent="register">
         <label>Käyttäjänimi</label>
-        <small v-if="userData.username.length > 0 && !dataValidation.isUsernameValid">Käyttäjänimi on joko liian lyhyt tai sisältää erikoismerkkejä</small>
+        <small v-if="!dataValidation.isUsernameValid">Käyttäjänimi on joko liian lyhyt tai sisältää
+            erikoismerkkejä</small>
         <input v-model="userData.username" maxlength="100" type="text">
-        
+
         <label>Sähköposti</label>
         <small v-if="!dataValidation.isEmailValid">Anna toimiva sähköpostiosoite</small>
         <input v-model="userData.email" type="email">
 
         <label>Salasana</label>
+        <small v-if="!dataValidation.isPasswordValid">Tarkista salasana</small>
         <input v-model="userData.password" type="password">
 
         <label>Salasana Uudelleen</label>
+        <small v-if="!dataValidation.isPasswordConfirmed">Salasanat eivät täsmää</small>
         <input v-model="confirmPassword" type="password">
 
-        <button type="submit">Rekisteröidy</button>
+        <button :disabled="!dataValidation.isAllValid" type="submit">Rekisteröidy</button>
     </form>
-
-
 </template>
+
+<style scoped>
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+</style>

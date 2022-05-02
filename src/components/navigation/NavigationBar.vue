@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import { isAuth } from '../../store';
 import LoginView from '../login/LoginView.vue';
 import { authService } from '../../services/authService'
+/* import { setError } from '../../composables/notification'; */
 
 const showLoginView = ref(false)
 
@@ -12,7 +13,6 @@ provide('showLoginView', showLoginView)
 const logout = async ()=>{
     await authService.useLogout()
 }
-
 
 </script>
 
@@ -23,6 +23,8 @@ const logout = async ()=>{
         <router-link v-if="isAuth" to="/users">Käyttäjät</router-link>
         <a href="#" v-if="isAuth" @click="logout">Ulos</a>
         <a href="#" v-else @click.prevent="showLoginView = true">Kirjaudu</a>
+
+     <!--    <a href="" @click.prevent="setError('Testi virhe')">Testaa ilmoitus</a> -->
     </div>
 
     <LoginView v-if="showLoginView && !isAuth"></LoginView>
